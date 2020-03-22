@@ -7,7 +7,7 @@ import { grey, yellow } from '@material-ui/core/colors';
 
 import Avatar from 'components/avatar';
 
-import { AppBar, Container, Drawer, Toolbar, IconButton, Tabs, Tab, Typography } from '@material-ui/core';
+import { AppBar, Container, Drawer, List, ListItem, ListItemText, Toolbar, IconButton, Tabs, Tab, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import GitHub from '@material-ui/icons/GitHub';
 import Twitter from '@material-ui/icons/Twitter';
@@ -40,6 +40,9 @@ const useStyles = makeStyles(theme => ({
       justifyContent: 'flex-start'
     }
   },
+  drawer: {
+    minWidth: 250
+  },
   menuButton: {
     display: 'flex',
     [theme.breakpoints.up('sm')]: {
@@ -56,8 +59,8 @@ const useStyles = makeStyles(theme => ({
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`
+    id: `navigation-tab-${index}`,
+    'aria-controls': `navigation-tabpanel-${index}`
   };
 }
 
@@ -73,21 +76,25 @@ const Header = (props) => {
     setValue(newValue);
   };
 
+  const ListItemLink = (props) => {
+    return <ListItem button component={Link} {...props} />;
+  };
+
   return (
     <AppBar position="static" className={classes.appBar}>
       <Container maxWidth={isDesktop ? 'lg' : false} disableGutters={!isDesktop}>
         <Toolbar className={classes.toolbar}>
           <Avatar/>
           {/*  desktop views */}
-          <Tabs classes={{ root: classes.tabs, indicator: classes.tabsIndicator }} value={value} onChange={handleChange} aria-label="simple tabs example">
+          <Tabs classes={{ root: classes.tabs, indicator: classes.tabsIndicator }} value={value} onChange={handleChange} aria-label="navigation">
             <Tab component={Link} value={'/'} to={'/'} className={classes.tab} label={'Home'} {...a11yProps(0)} />
             <Tab component={Link} value={'/page-2/'} to={'/page-2'} className={classes.tab} label={'Page 2'} {...a11yProps(1)} />
           </Tabs>
 
-          <IconButton className={classes.socialIcon} edge="start" color="inherit" aria-label="menu">
+          <IconButton className={classes.socialIcon} edge="start" color="inherit" aria-label="twitter">
             <Twitter />
           </IconButton>
-          <IconButton className={classes.socialIcon} edge="start" color="inherit" aria-label="menu">
+          <IconButton className={classes.socialIcon} edge="start" color="inherit" aria-label="github">
             <GitHub />
           </IconButton>
 
@@ -95,9 +102,23 @@ const Header = (props) => {
           <IconButton edge="start" className={classes.menuButton} onClick={() => setDrawerOpen(true)} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Drawer anchor={'right'} open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-            <Link onClick={() => setDrawerOpen(false)} to={'/'}>Home</Link>
-            <Link onClick={() => setDrawerOpen(false)} to={'/page-2'}>Page 2</Link>
+          <Drawer classes={{ paper: classes.drawer }} anchor={'right'} open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+            <List>
+              <ListItemLink onClick={() => setDrawerOpen(false)} to={'/'}>
+                <ListItemText primary="Home" />
+              </ListItemLink>
+              <ListItemLink onClick={() => setDrawerOpen(false)} to={'/page-2'}>
+                <ListItemText primary="Page 2" />
+              </ListItemLink>
+              <ListItem>
+                <IconButton edge="start" color="inherit" aria-label="twitter">
+                  <Twitter />
+                </IconButton>
+                <IconButton edge="start" color="inherit" aria-label="github">
+                  <GitHub />
+                </IconButton>
+              </ListItem>
+            </List>
           </Drawer>
 
         </Toolbar>
