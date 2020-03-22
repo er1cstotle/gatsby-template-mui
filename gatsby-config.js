@@ -37,7 +37,8 @@ module.exports = {
         src: path.join(__dirname, 'src'),
         pages: path.join(__dirname, 'src/pages')
       }
-    }
+    },
+    `gatsby-plugin-transition-link`
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
