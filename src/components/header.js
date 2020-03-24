@@ -34,9 +34,10 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: yellow.A700
   },
   toolbar: {
-    minHeight: 48,
+    minHeight: 64,
     justifyContent: 'space-between',
     [theme.breakpoints.up('sm')]: {
+      minHeight: 48,
       justifyContent: 'flex-start'
     }
   },
